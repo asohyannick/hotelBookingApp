@@ -63,7 +63,7 @@ const editMyHotel = async (req: Request, res: Response) => {
   }
 };
 
-export const updateMyHotel = async (req: Request, res: Response) => {
+const updateMyHotel = async (req: Request, res: Response) => {
   const storage = multer.memoryStorage();
   const upload = multer({
     storage: storage,
@@ -99,7 +99,10 @@ export const updateMyHotel = async (req: Request, res: Response) => {
   }
 };
 
-const fetchAllHotels = async (req: Request, res: Response) => {
+const AddSortingFilteringAndPaginationLogic = async (
+  req: Request,
+  res: Response
+) => {
   try {
     const query = constructSearchQuery(req.query);
     let sortOptions = {};
@@ -280,16 +283,6 @@ const hotelBooking = async (req: Request, res: Response) => {
   }
 };
 
-// async function uploadImages(imageFiles: Express.Multer.File[]) {
-//   const uploadPromises = imageFiles.map(async (image) => {
-//     const b64 = Buffer.from(image.buffer).toString("base64");
-//     let dataURI = "data:" + image.mimetype + ";base64" + b64;
-//     const res = await cloudinary.v2.uploader.upload(dataURI);
-//     return res.url;
-//   });
-//   const imageUrls = await Promise.all(uploadPromises);
-//   return imageUrls;
-// }
 async function uploadImages(imageFiles: Express.Multer.File[]) {
   const uploadPromises = imageFiles.map(async (image) => {
     const b64 = Buffer.from(image.buffer).toString("base64");
@@ -301,13 +294,23 @@ async function uploadImages(imageFiles: Express.Multer.File[]) {
   return imageUrls;
 }
 
+const fetchAllMyHotels = async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find().sort("-lastUpdatd");
+    res.json(hotels);
+  } catch (error) {
+    console.log("errors", error);
+    res.status(500).json({ message: "Error fetching hotels" });
+  }
+};
 export default {
   createHotels,
   getSingleHotel,
   editMyHotel,
   updateMyHotel,
-  fetchAllHotels,
+  AddSortingFilteringAndPaginationLogic,
   hotelDetailPage,
   stripePayments,
   hotelBooking,
+  fetchAllMyHotels,
 };
