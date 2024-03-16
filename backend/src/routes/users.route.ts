@@ -1,6 +1,7 @@
 import express from 'express';
 import user from '../controllers/user.controller';
 import { check } from 'express-validator';
+import verifyToken from '../middleware/auth';
 const router = express.Router();
 // api/users/register
 router.post('/register',[
@@ -11,4 +12,5 @@ router.post('/register',[
         min:6,
     }),
 ], user.signup);
+router.get('/me', verifyToken, user.fetchOneUser)
 export default router;

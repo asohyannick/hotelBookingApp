@@ -8,7 +8,8 @@
     "start": "node ./backend/dist/index.js",
     "client": "npm run dev --prefix frontend",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "e2e": "cross-env DOTENV_CONFIG_PATH=.env.e2e nodemon"
   },
   "keywords": [],
   "author": "",
