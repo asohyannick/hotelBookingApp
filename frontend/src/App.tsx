@@ -20,7 +20,7 @@ function App() {
           path="/"
           element={
             <Layout>
-              <Home/>
+              <Home />
             </Layout>
           }
         />
@@ -28,15 +28,15 @@ function App() {
           path="/search"
           element={
             <Layout>
-              <Search/>
+              <Search />
             </Layout>
           }
         />
-          <Route
+        <Route
           path="/detail/:hotelId"
           element={
             <Layout>
-              <Detail/>
+              <Detail />
             </Layout>
           }
         />
@@ -56,15 +56,15 @@ function App() {
             </Layout>
           }
         />
-        
+
         {/* Protected Routes */}
         {isLoggedIn && (
           <>
-           <Route
+            <Route
               path="/hotel/:hotelId/booking"
               element={
                 <Layout>
-                  <Booking/>
+                  <Booking />
                 </Layout>
               }
             />
@@ -76,27 +76,27 @@ function App() {
                 </Layout>
               }
             />
-              <Route
+            <Route
+              path="/edit-hotel/:hotelId"
+              element={
+                <Layout>
+                  <EditHotel />
+                </Layout>
+              }
+            />
+            <Route
+              path="/my-hotels"
+              element={
+                <Layout>
+                  <MyHotels />
+                </Layout>
+              }
+            />
+            <Route
               path="/my-bookings"
               element={
                 <Layout>
                   <MyBookings />
-                </Layout>
-              }
-            />
-             <Route
-              path="/edit-hotel/:hotelId"
-              element={
-                <Layout>
-                  <EditHotel/>
-                </Layout>
-              }
-             />
-              <Route
-              path="/my-hotel"
-              element={
-                <Layout>
-                  <MyHotels />
                 </Layout>
               }
             />

@@ -6,7 +6,7 @@ import {
   PaymentIntentResponse,
   UserType,
 } from "../../backend/src/shared/types";
-import { BookingFormData } from './forms/bookingForm/BookingForm';
+import { BookingFormData } from "./forms/bookingForm/BookingForm";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 export const fetchCurrentUser = async (): Promise<UserType> => {
@@ -160,13 +160,13 @@ export const searchHotels = async (
   return response.json();
 };
 
-export const fetchHotels = async(): Promise<HotelType[]> => {
-  const response = await fetch(`${  API_BASE_URL}/api/hotels`);
-  if(!response.ok) {
+export const fetchHotels = async (): Promise<HotelType[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/hotels`);
+  if (!response.ok) {
     throw new Error("Error fetching hotels");
   }
   return response.json();
-}
+};
 
 export const fetchHotelById = async (hotelId: string): Promise<HotelType> => {
   const response = await fetch(`${API_BASE_URL}/api/hotels/${hotelId}`);
@@ -197,29 +197,29 @@ export const createPaymentIntent = async (
   return response.json();
 };
 
-
-export const createRoomBooking = async(formData: BookingFormData) => {
-  const response = await fetch(`${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`, {
-    method: "POST",
-    headers: {
-      "Content-Type" : "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(formData),
-  });
-  if(!response.ok) {
-    throw new Error("Error booking room")
+export const createRoomBooking = async (formData: BookingFormData) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(formData),
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Error booking room");
   }
+};
 
-}
-
-
-export const fetchMyBookings = async(): Promise<HotelType[]> => {
+export const fetchMyBookings = async (): Promise<HotelType[]> => {
   const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {
-    credentials:"include",
+    credentials: "include",
   });
-  if(!response.ok) {
-    throw new Error("Unable to fetch bookings")
+  if (!response.ok) {
+    throw new Error("Unable to fetch bookings");
   }
   return response.json();
-}
+};

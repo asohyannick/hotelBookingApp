@@ -15,7 +15,7 @@ export default function Search() {
   const [selectedHotelTypes, setSelectedHotelTypes] = useState<string[]>([]);
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
   const [selectedPrice, setSelectedPrice] = useState<number | undefined>();
-  const [sortOption, setSortOption] = useState<string>('');
+  const [sortOption, setSortOption] = useState<string>("");
 
   const searchParams = {
     destination: search.destination,
@@ -30,9 +30,9 @@ export default function Search() {
     maxPrice: selectedPrice?.toString(),
     sortOption,
   };
-  const { data: hotelData } = useQuery(["searchHotels", searchParams], () => {
-    apiClient.searchHotels(searchParams);
-  });
+  const { data: hotelData } = useQuery(["searchHotels", searchParams], () =>
+    apiClient.searchHotels(searchParams)
+  );
   const handelStarsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const starRating = event.target.value;
     setSelectedStars((prevStars) =>
@@ -90,7 +90,10 @@ export default function Search() {
             {hotelData?.pagination.total} Hotels found
             {search.destination ? `in ${search.destination}` : ""}
           </span>
-          <select value={sortOption} onChange={(event) => setSortOption(event.target.value)}>
+          <select
+            value={sortOption}
+            onChange={(event) => setSortOption(event.target.value)}
+          >
             <option value="">Sort By:</option>
             <option value="starRating">Star Rating</option>
             <option value="pricePerNightAsc">

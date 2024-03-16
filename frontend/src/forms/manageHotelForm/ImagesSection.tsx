@@ -28,7 +28,7 @@ export default function ImagesSection() {
         {existingImageUrls && (
           <div className="grid grid-cols-6 gap-4">
             {existingImageUrls.map((url) => (
-              <div className="relative group">
+              <div className="relative group" key={url}>
                 <img
                   src={url}
                   alt="Image"

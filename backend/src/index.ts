@@ -1,4 +1,4 @@
-import express, {Application,Request,Response,NextFunction} from 'express';
+import express, {Application,Request,Response} from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import path from 'path';
@@ -28,17 +28,16 @@ app.use(cors({
     origin:process.env.FRONTEND_URL,
     credentials: true,
 }));
-app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 // routes
-app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/my-hotels', hotelRoutes);
 app.use('/api/hotels', fetchAllHotelsRoutes);
 app.use('/api/my-bookings', bookingRoutes)
 app.get("*", (eq:Request, res:Response) => {
     res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
 });
-app.get('/', (req:Request, res:Response, next:NextFunction) => {
+app.get('/', (req:Request, res:Response) => {
     res.send("API is working...");
 })
 app.listen(PORT, () => {

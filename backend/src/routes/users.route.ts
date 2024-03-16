@@ -3,6 +3,7 @@ import user from '../controllers/user.controller';
 import { check } from 'express-validator';
 import verifyToken from '../middleware/auth';
 const router = express.Router();
+router.get('/me', verifyToken, user.fetchCurrentUser);
 // api/users/register
 router.post('/register',[
     check("firstName", "First Name is required").isString(),
@@ -12,5 +13,4 @@ router.post('/register',[
         min:6,
     }),
 ], user.signup);
-router.get('/me', verifyToken, user.fetchOneUser)
 export default router;

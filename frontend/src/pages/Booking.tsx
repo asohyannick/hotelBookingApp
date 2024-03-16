@@ -8,7 +8,7 @@ import BookingDetailSummary from "../components/BookingDetailSummary";
 import { Elements } from "@stripe/react-stripe-js";
 import { useAppContext } from "../context/AppContext";
 export default function Booking() {
-  const { stripePromise } = useAppContext();
+  const { stripePromise} = useAppContext();
   const search = useSearchContext();
   const { hotelId } = useParams();
   const [numberOfNights, setNumberOfNights] = useState<number>(0);
@@ -42,7 +42,7 @@ export default function Booking() {
     }
   );
   const { data: currentUser } = useQuery(
-    "fetchCurrentUser",
+    "fetchCurrentUser", 
     apiClient.fetchCurrentUser
   );
   if (!hotel) {
@@ -50,7 +50,6 @@ export default function Booking() {
   }
   return (
     <div className="grid md:grid-cols-[1fr_2fr]">
-      <div className="bg-green-200">BOOKING DETAILS SUMMARY</div>
       <BookingDetailSummary
         checkIn={search.checkIn}
         checkOut={search.checkOut}
@@ -59,7 +58,7 @@ export default function Booking() {
         numberOfNights={numberOfNights}
         hotel={hotel}
       />
-      {currentUser && paymentIntentData && (
+      {currentUser  && paymentIntentData && (
         <Elements
           stripe={stripePromise}
           options={{

@@ -6,12 +6,13 @@ import ManageHotelForm from "../forms/manageHotelForm/ManageHotelForm";
 export default function EditHotel() {
   const { showToast } = useAppContext();
   const { hotelId } = useParams();
-  const { data: hotel } = useQuery("fetchMyHotelById", () => {
-    apiClient.fetchMyHotelById(hotelId || ""),
+  const { data: hotel } = useQuery(
+    "fetchMyHotelById",
+     () => apiClient.fetchMyHotelById(hotelId || ""),
       {
         enabled: !!hotelId,
-      };
-  });
+      }
+  );
   const { mutate, isLoading } = useMutation(apiClient.updateMyHotelById, {
     onSuccess: () => {
       showToast({ message: "Hotel Saved!", type: "SUCCESS" });

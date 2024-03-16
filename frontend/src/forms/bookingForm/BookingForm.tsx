@@ -31,16 +31,19 @@ export default function BookingForm({ currentUser, paymentIntent }: Props) {
   const elements = useElements();
   const search = useSearchContext();
   const { hotelId } = useParams();
-  const {showToast}  = useAppContext();
+  const { showToast } = useAppContext();
 
-  const { mutate: bookForm, isLoading } = useMutation(apiClient.createRoomBooking, {
-    onSuccess: () => {
-      showToast({message: "Booking Saved", type:'SUCCESS'})
-    },
-    onError: () => {
-      showToast({message: "Error saving booking", type:'ERROR'})
-    },
-  });
+  const { mutate: bookRoom, isLoading } = useMutation(
+    apiClient.createRoomBooking,
+    {
+      onSuccess: () => {
+        showToast({ message: "Booking Saved", type: "SUCCESS" });
+      },
+      onError: () => {
+        showToast({ message: "Error saving booking", type: "ERROR" });
+      },
+    }
+  );
   const { handleSubmit, register } = useForm<BookingFormData>({
     defaultValues: {
       firstName: currentUser.firstName,
@@ -66,7 +69,7 @@ export default function BookingForm({ currentUser, paymentIntent }: Props) {
     });
     if (result.paymentIntent?.status === "succeeded") {
       // book the room
-      bookForm({ ...formData, paymentIntentId: result.paymentIntent.id });
+      bookRoom({ ...formData, paymentIntentId: result.paymentIntent.id });
     }
   };
   return (
@@ -124,10 +127,10 @@ export default function BookingForm({ currentUser, paymentIntent }: Props) {
         />
       </div>
       <div className="flex justify-end">
-        <button 
-        disabled={isLoading}
-        type="submit"
-        className="bg-blue-500 text-white p-2 font-bold hover:bg-blue-500 text-md disabled:bg-gray-500"
+        <button
+          disabled={isLoading}
+          type="submit"
+          className="bg-blue-500 text-white p-2 font-bold hover:bg-blue-500 text-md disabled:bg-gray-500"
         >
           {isLoading ? "Saving..." : "Confirm Booking"}
         </button>

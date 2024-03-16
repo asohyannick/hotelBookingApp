@@ -41,7 +41,7 @@ export default function SearchResultsCard({ hotel }: Props) {
             </div>
           </div>
           <div className="flex flex-col items-end gap-1">
-            <span className="font-bold">{hotel.pricePerNight}</span>
+            <span className="font-bold">{hotel.pricePerNight} per Night</span>
             <Link to={`/detail/${hotel._id}`} className="bg-blue-600 text-white h-full p-2 font-bold text-xl max-w-fit hover:bg-blue-500">
               View More
             </Link>

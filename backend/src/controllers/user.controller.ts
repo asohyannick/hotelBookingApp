@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from "express";
 import User from "../models/user.model";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
-import Hotel from "../models/hotel.model";
 const signup = async (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
@@ -36,14 +35,14 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const fetchOneUser = async(req:Request, res:Response) => {
+const fetchCurrentUser = async(req:Request, res:Response) => {
   const userId = req.userId;
   try {
-    const user = await Hotel.findById(userId).select("-password");
+    const user = await User.findById(userId).select("-password");
     if(!user) {
-      return res.status(400).json("User not found")
+      return res.status(404).json("User not found")
     }
-    res.json(user);
+    res.status(200).json(user);
   } catch(error) {
     console.log(error)
     res.status(500).json('Something went wrong');
@@ -52,5 +51,5 @@ const fetchOneUser = async(req:Request, res:Response) => {
 
 export default {
   signup,
-  fetchOneUser
+  fetchCurrentUser
 };

@@ -5,7 +5,7 @@ const fetchBookings = async(req:Request, res:Response) => {
     try {
 
      const hotels = await Hotel.find({
-        bookings: {$seleMatch: {userId: req.userId}}
+        bookings: {$elemMatch: {userId: req.userId}}
      });
 
      const results = hotels.map((hotel) => {
@@ -21,7 +21,7 @@ const fetchBookings = async(req:Request, res:Response) => {
      res.status(200).send(results);
     } catch(error) {
         console.log(error);
-        res.status(500).json("Hotel not found")
+        res.status(500).json("Unable to fetch bookings")
     }
 }
 

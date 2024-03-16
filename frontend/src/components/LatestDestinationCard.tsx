@@ -8,7 +8,7 @@ export default function LatestDestinationCard({ hotel }) {
     >
       <div className="h-[300px]">
         <img
-          src={hotel.imageUrls[0]}
+          src={hotel.imageUrls[2]}
           className="w-full h-full object-cover object-center"
         />
       </div>

@@ -16,9 +16,11 @@ type SearchContext = {
 };
 
 const SearchContext = React.createContext<SearchContext | undefined>(undefined);
+
 type SearchContextProviderProps = {
   children: React.ReactNode;
 };
+
 export const SearchContextProvider = ({
   children,
 }: SearchContextProviderProps) => {

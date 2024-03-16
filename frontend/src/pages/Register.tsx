@@ -26,8 +26,8 @@ export default function Register() {
       await queryClient.invalidateQueries("validateToken")
       navigate('/');
     },
-    onError: (error: Error) => {
-      showToast({ message: error.message, type: "ERROR" });
+    onError: () => {
+      showToast({ message: "User already exist!", type: "ERROR" });
     },
   });
   const onSubmit = handleSubmit((data) => {

@@ -4,6 +4,7 @@ import Hotel from "../models/hotel.model";
 import { HotelType, HotelSearchResponse, BookingType } from "../shared/types";
 import cloudinary from "cloudinary";
 import { validationResult } from "express-validator";
+import mongoose from "mongoose";
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 const createHotels = async (req: Request, res: Response) => {
@@ -54,7 +55,7 @@ const editMyHotel = async (req: Request, res: Response) => {
   const id = req.params.id.toString();
   try {
     const hotel = await Hotel.findOne({
-      _id: id,
+      _id: new mongoose.Types.ObjectId(id),
       userId: req.userId,
     });
     res.json(hotel);
@@ -71,32 +72,40 @@ const updateMyHotel = async (req: Request, res: Response) => {
       fileSize: 5 * 1024 * 1024, // 5MB
     },
   });
-  upload.array("imageFiles");
-  try {
-    const updatedHotel: HotelType = req.body;
-    updatedHotel.lastUpdated = new Date();
-
-    const hotel = await Hotel.findOneAndUpdate(
-      {
-        _id: req.params.hotelId,
-        userId: req.userId,
-      },
-      updatedHotel,
-      { new: true }
-    );
-
-    if (!hotel) {
-      return res.status(404).json("Hotel not found");
+  upload.array("imageFiles")(req, res, async (err: any) => {
+    if (err) {
+      return res.status(400).json({ message: "Error uploading files" });
     }
 
-    const files = req.files as Express.Multer.File[];
-    const updatedImageUrls = await uploadImages(files);
-    hotel.imageUrls = [...updatedImageUrls, ...(updatedHotel.imageUrls || [])];
-    await hotel.save();
-    res.status(201).json(hotel);
-  } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
-  }
+    try {
+      const updatedHotel: HotelType = req.body;
+      updatedHotel.lastUpdated = new Date();
+
+      const hotel = await Hotel.findOneAndUpdate(
+        {
+          _id: req.params.hotelId,
+          userId: req.userId,
+        },
+        updatedHotel,
+        { new: true }
+      );
+
+      if (!hotel) {
+        return res.status(404).json("Hotel not found");
+      }
+
+      const files = req.files as Express.Multer.File[];
+      const updatedImageUrls = await uploadImages(files);
+      hotel.imageUrls = [
+        ...updatedImageUrls,
+        ...(updatedHotel.imageUrls || []),
+      ];
+      await hotel.save();
+      res.status(201).json(hotel);
+    } catch (error) {
+      res.status(500).json({ message: "Something went wrong." });
+    }
+  });
 };
 
 const AddSortingFilteringAndPaginationLogic = async (
@@ -228,7 +237,8 @@ const stripePayments = async (req: Request, res: Response) => {
     amount: totalCost * 100,
     currency: "gbp",
     metadata: {
-      hotelId: req.userId,
+      hotelId,
+      userId: req.userId,
     },
   });
   if (!paymentIntent.client_secret) {
@@ -260,7 +270,9 @@ const hotelBooking = async (req: Request, res: Response) => {
     if (paymentIntent.status !== "succeeded") {
       return res
         .status(400)
-        .json(`Payment intent not succeeded. Status: ${paymentIntent.status}`);
+        .json({
+          message: `Payment intent not succeeded. Status: ${paymentIntent.status}`,
+        });
     }
     const newBooking: BookingType = {
       ...req.body,
@@ -303,6 +315,7 @@ const fetchAllMyHotels = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error fetching hotels" });
   }
 };
+
 export default {
   createHotels,
   getSingleHotel,
