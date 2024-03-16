@@ -15,6 +15,7 @@ import userRoutes from '../src/routes/users.route';
 import authRoutes from '../src/routes/auth.route';
 import hotelRoutes from './routes/my-hotels.route';
 import fetchAllHotelsRoutes from './routes/hotels.route';
+import bookingRoutes from './routes/my-booking';
 mongoose.connect(process.env.MONGODB_URI_CONNNECTIONSTRING as string).then(() => {
     console.log('Connected to database:', process.env.MONGODB_URI_CONNNECTIONSTRING as string)
 });
@@ -33,6 +34,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/my-hotels', hotelRoutes);
 app.use('/api/hotels', fetchAllHotelsRoutes);
+app.use('/api/my-bookings', bookingRoutes)
 app.get("*", (eq:Request, res:Response) => {
     res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
 });
