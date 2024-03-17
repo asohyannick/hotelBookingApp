@@ -154,11 +154,16 @@ export const searchHotels = async (
   const response = await fetch(
     `${API_BASE_URL}/api/hotels/search?${queryParams}`
   );
+
   if (!response.ok) {
     throw new Error("Error fetching hotels");
   }
+
   return response.json();
 };
+
+
+
 
 export const fetchHotels = async (): Promise<HotelType[]> => {
   const response = await fetch(`${API_BASE_URL}/api/hotels`);
@@ -181,7 +186,7 @@ export const createPaymentIntent = async (
   numberOfNights: string
 ): Promise<PaymentIntentResponse> => {
   const response = await fetch(
-    `${API_BASE_URL}/api/hotels/${hotelId}/bookings/payments-intent`,
+    `${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`,
     {
       credentials: "include",
       method: "POST",
@@ -196,6 +201,8 @@ export const createPaymentIntent = async (
   }
   return response.json();
 };
+
+
 
 export const createRoomBooking = async (formData: BookingFormData) => {
   const response = await fetch(

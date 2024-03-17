@@ -4,20 +4,23 @@ import BookingForm from "../forms/bookingForm/BookingForm";
 import { useSearchContext } from "../context/SearchContext";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import BookingDetailSummary from "../components/BookingDetailSummary";
+import BookingDetailsSummary from "../components/BookingDetailSummary";
 import { Elements } from "@stripe/react-stripe-js";
 import { useAppContext } from "../context/AppContext";
-export default function Booking() {
-  const { stripePromise} = useAppContext();
+
+const Booking = () => {
+  const { stripePromise } = useAppContext();
   const search = useSearchContext();
   const { hotelId } = useParams();
+
   const [numberOfNights, setNumberOfNights] = useState<number>(0);
+
   useEffect(() => {
     if (search.checkIn && search.checkOut) {
-      const nights = Math.abs(
-        (search.checkOut.getTime() - search.checkIn.getTime()) /
-          (1000 * 60 * 60 * 24)
-      );
+      const nights =
+        Math.abs(search.checkOut.getTime() - search.checkIn.getTime()) /
+        (1000 * 60 * 60 * 24);
+
       setNumberOfNights(Math.ceil(nights));
     }
   }, [search.checkIn, search.checkOut]);
@@ -35,22 +38,25 @@ export default function Booking() {
   );
 
   const { data: hotel } = useQuery(
-    "fetchHotelById",
+    "fetchHotelByID",
     () => apiClient.fetchHotelById(hotelId as string),
     {
       enabled: !!hotelId,
     }
   );
+
   const { data: currentUser } = useQuery(
-    "fetchCurrentUser", 
+    "fetchCurrentUser",
     apiClient.fetchCurrentUser
   );
+
   if (!hotel) {
     return <></>;
   }
+
   return (
     <div className="grid md:grid-cols-[1fr_2fr]">
-      <BookingDetailSummary
+      <BookingDetailsSummary
         checkIn={search.checkIn}
         checkOut={search.checkOut}
         adultCount={search.adultCount}
@@ -58,7 +64,7 @@ export default function Booking() {
         numberOfNights={numberOfNights}
         hotel={hotel}
       />
-      {currentUser  && paymentIntentData && (
+      {currentUser && paymentIntentData && (
         <Elements
           stripe={stripePromise}
           options={{
@@ -73,4 +79,6 @@ export default function Booking() {
       )}
     </div>
   );
-}
+};
+
+export default Booking;
