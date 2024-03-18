@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
 
-export default function LatestDestinationCard({ hotel }) {
+interface Hotel {
+  _id: string;
+  imageUrls: string[];
+  // Add any other properties of the hotel object
+}
+
+interface LatestDestinationCardProps {
+  hotel: Hotel;
+}
+
+export default function LatestDestinationCard({ hotel}: LatestDestinationCardProps) {
   return (
     <Link
       to={`/detail/${hotel._id}`}

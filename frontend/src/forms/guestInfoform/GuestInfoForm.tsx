@@ -73,7 +73,6 @@ export default function GuestInfoForm({ hotelId, pricePerNight }: Props) {
               selectsStart
               startDate={checkIn}
               endDate={checkOut}
-              placeholder="Check-in Date"
               minDate={minDate}
               maxDate={maxDate}
               wrapperClassName="min-w-full"
@@ -88,7 +87,6 @@ export default function GuestInfoForm({ hotelId, pricePerNight }: Props) {
               selectsStart
               startDate={checkIn}
               endDate={checkOut}
-              placeholder="Check-in Date"
               minDate={minDate}
               maxDate={maxDate}
               wrapperClassName="min-w-full"

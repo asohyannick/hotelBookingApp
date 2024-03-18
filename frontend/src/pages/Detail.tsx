@@ -20,7 +20,7 @@ export default function Detail() {
       <div>
         <span className="flex" key={hotel._id}>
           {Array.from({ length: hotel.starRating }).map(() => (
-            <AiFillStar clasName="fill-yellow-400" />
+            <AiFillStar className="fill-yellow-400" />
           ))}
         </span>
         <h1 className="text-3xl font-bold">{hotel.name}</h1>
