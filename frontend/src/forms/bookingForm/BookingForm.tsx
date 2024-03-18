@@ -3,7 +3,7 @@ import {
   PaymentIntentResponse,
   UserType,
 } from "../../../../backend/src/shared/types";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { CardElement,  useStripe, useElements } from "@stripe/react-stripe-js";
 import { StripeCardElement } from "@stripe/stripe-js";
 import { useSearchContext } from "../../context/SearchContext";
 import { useParams } from "react-router-dom";
@@ -84,7 +84,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid grid-cols-1 gap-5 rounded-lg border border-slate-300 p-5"
+      className="grid grid-cols-1 gap-5 rounded-lg border border-slate-300 p-5 ml-3"
     >
       <span className="text-3xl font-bold">Confirm Your Details</span>
       <div className="grid grid-cols-2 gap-6">
@@ -135,10 +135,9 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
         <h3 className="text-xl font-semibold"> Payment Details</h3>
         <CardElement
           id="payment-element"
-          className="border rounded-md p-2 text-sm"
+          className="border rounded-md p-5 text-sm"
         />
       </div>
-
       <div className="flex justify-end">
         <button
           disabled={isLoading}

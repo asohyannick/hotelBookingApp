@@ -4,6 +4,7 @@ export default function Footer() {
         <div className="container mx-auto flex justify-between items-center">
           <span className="text-3xl text-white font-bold tracking-tight hover:underline">
               MernHolidays.com
+              <p className="text-2xl">@Asoh Yannick mernHolidays {new  Date().getFullYear()}</p>
           </span>
           <span className="text-white font-bold tracking-tight flex gap-4">
               <p className="cursor-pointer hover:underline">Privacy Policy</p>
