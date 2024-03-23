@@ -15,7 +15,7 @@ import userRoutes from './routes/users.route';
 import authRoutes from './routes/auth.route';
 import hotelRoutes from './routes/my-hotels.route';
 import fetchAllHotelsRoutes from './routes/hotels.route';
-import bookingRoutes from './routes/my-booking';
+import bookingRoutes from './routes/my-booking.route';
 mongoose.connect(process.env.MONGODB_URI_CONNNECTIONSTRING as string).then(() => {
     console.log('Connected to database:', process.env.MONGODB_URI_CONNNECTIONSTRING as string)
 });
