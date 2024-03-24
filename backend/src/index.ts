@@ -11,7 +11,7 @@ cloudinary.config({
     api_secret:process.env.CLOUDINARY_API_SECRET,
 });
 // routes
-import userRoutes from './routes/users.route';
+import userRoutes from '../src/routes/users.route';
 import authRoutes from './routes/auth.route';
 import hotelRoutes from './routes/my-hotels.route';
 import fetchAllHotelsRoutes from './routes/hotels.route';
